@@ -11,7 +11,9 @@ const getAll = async (req, res) => {
     const users = await getAllUsers();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch users", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch users", error: error.message });
   }
 };
 
@@ -37,7 +39,9 @@ const create = async (req, res) => {
     const { first_name, last_name, age, email } = req.body;
 
     if (!first_name || !last_name || age === undefined || !email) {
-      return res.status(400).json({ message: "first_name, last_name, age, and email are required" });
+      return res.status(400).json({
+        message: "first_name, last_name, age, and email are required",
+      });
     }
 
     const newUser = await createUser({ first_name, last_name, age, email });
@@ -55,10 +59,17 @@ const update = async (req, res) => {
     const { first_name, last_name, age, email } = req.body;
 
     if (!first_name || !last_name || age === undefined || !email) {
-      return res.status(400).json({ message: "first_name, last_name, age, and email are required" });
+      return res.status(400).json({
+        message: "first_name, last_name, age, and email are required",
+      });
     }
 
-    const updatedUser = await updateUser(id, { first_name, last_name, age, email });
+    const updatedUser = await updateUser(id, {
+      first_name,
+      last_name,
+      age,
+      email,
+    });
 
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });

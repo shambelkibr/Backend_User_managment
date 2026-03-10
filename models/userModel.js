@@ -2,7 +2,7 @@ import db from "../config/db.js";
 
 const getAllUsers = async () => {
   const [rows] = await db.query(
-    "SELECT user_id, first_name, last_name, age, email FROM users"
+    "SELECT user_id, first_name, last_name, age, email FROM users",
   );
   return rows;
 };
@@ -10,7 +10,7 @@ const getAllUsers = async () => {
 const getUserById = async (userId) => {
   const [rows] = await db.query(
     "SELECT user_id, first_name, last_name, age, email FROM users WHERE user_id = ?",
-    [userId]
+    [userId],
   );
   return rows[0] || null;
 };
@@ -18,7 +18,7 @@ const getUserById = async (userId) => {
 const createUser = async ({ first_name, last_name, age, email }) => {
   const [result] = await db.query(
     "INSERT INTO users (first_name, last_name, age, email) VALUES (?, ?, ?, ?)",
-    [first_name, last_name, age, email]
+    [first_name, last_name, age, email],
   );
 
   return {
@@ -33,7 +33,7 @@ const createUser = async ({ first_name, last_name, age, email }) => {
 const updateUser = async (userId, { first_name, last_name, age, email }) => {
   const [result] = await db.query(
     "UPDATE users SET first_name = ?, last_name = ?, age = ?, email = ? WHERE user_id = ?",
-    [first_name, last_name, age, email, userId]
+    [first_name, last_name, age, email, userId],
   );
 
   if (result.affectedRows === 0) {
@@ -50,7 +50,9 @@ const updateUser = async (userId, { first_name, last_name, age, email }) => {
 };
 
 const deleteUser = async (userId) => {
-  const [result] = await db.query("DELETE FROM users WHERE user_id = ?", [userId]);
+  const [result] = await db.query("DELETE FROM users WHERE user_id = ?", [
+    userId,
+  ]);
   return result.affectedRows > 0;
 };
 
